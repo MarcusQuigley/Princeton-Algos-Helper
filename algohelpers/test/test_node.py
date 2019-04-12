@@ -1,9 +1,7 @@
 import unittest
-import helpers.node
-#from helpers import node
-#import helpers.node
-#from helpers import node
-from helpers.node import Node
+import algohelpers.node
+
+from algohelpers.node import Node
 #@unittest.skip('skipping to get Bag working')
 class TestNode(unittest.TestCase):
   def test_create_node(self):

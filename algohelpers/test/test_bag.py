@@ -1,9 +1,7 @@
 import unittest
-import helpers.bag
-#import helpers.node
+import algohelpers.bag
 
-from helpers.bag import Bag
-#from helpers.node import Node
+from algohelpers.bag import Bag
 
 class TestBag(unittest.TestCase):
   def test_create_bag(self):
