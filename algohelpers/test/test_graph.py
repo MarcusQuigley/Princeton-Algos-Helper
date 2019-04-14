@@ -1,3 +1,5 @@
+import io
+import os
 import unittest
 import algohelpers.graph
 import algohelpers.bag
@@ -16,20 +18,48 @@ class TestGraph(unittest.TestCase):
     newgraph = Graph(graph)
     self.assertIsNotNone(graph)
 
+  def test_create_graph_with_stream(self):
+    try:
+      TESTDATA_FILENAME = os.path.join(os.path.dirname(__file__), 'tiny_graph_data.txt')
+      data = open(TESTDATA_FILENAME, 'r')
+
+      graph = Graph(None,0, data)
+      self.assertTrue(graph.edges>0)
+    except Exception as e:
+      print(e)
+    finally:
+      if data:
+        data.close()
+
+  def test_create_graph_with_badstream(self):
+    try:
+      # TESTDATA_FILENAME = os.path.join(os.path.dirname(__file__), 'tiny_graph_data.txt')
+      # data = open(TESTDATA_FILENAME, 'r')
+      data = io.StringIO('some random data')
+
+      graph = Graph(None,0, data)
+      self.assertTrue( graph.edges == 0)
+    except Exception as e:
+      print(e)
+    finally:
+      if data:
+        data.close()
+
+
   def test_create_graph_with_negative(self):
-    self.assertRaises(ValueError, Graph,-5)  
+    self.assertRaises(ValueError, None,-5)  
 
   def test_get_vertex(self):
     expected = 3
     graph = Graph(None, expected)
-    self.assertEqual(expected,graph.vertex)
+    self.assertEqual(expected,graph.vertices)
 
-  #this tests both get edge and validate vertex
-  def test_add_valid_edge(self):
-    expected_edge = 1
+  #this tests both get edges and validate vertices
+  def test_add_valid_edges(self):
+    expected_edges = 1
     graph = Graph(None, 3)
     graph.add_edge(1,2)
-    self.assertEqual(expected_edge,graph.edge)
+    self.assertEqual(expected_edges,graph.edges)
 
   def test_add_invalid_edge(self):
     graph = Graph(None, 3)
@@ -62,7 +92,7 @@ class TestGraph(unittest.TestCase):
   def test_string_returned(self):
     expected = self._create_graph()
     xx = expected.__str__()
-    self.assertIsNotNone(expected.__str__())
+    self.assertTrue(len(expected.__str__()) > 0)
 
 
   def _create_graph(self):
