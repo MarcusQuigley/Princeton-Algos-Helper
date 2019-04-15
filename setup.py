@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='algohelpers',
-    version='0.1',
+    version='0.2',
     packages=['algohelpers',],
     license='Creative Commons Attribution-Noncommercial-Share Alike license',
     long_description=open('README.txt').read(),

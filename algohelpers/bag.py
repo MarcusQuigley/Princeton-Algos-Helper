@@ -14,6 +14,14 @@ class Bag(object):
       yield node
       node = node.next_node
 
+  @property
+  def size(self):
+    return self._size
+  
+  @property
+  def isEmpty(self):
+    return self._head is None
+
   def contains(self, item):
     node = self._head
     while node is not None:
@@ -45,12 +53,18 @@ class Bag(object):
       self._head = newnode
     self._size += 1
     
+  def __str__(self):
+    str = f'size:{self.size}'
+    count=1
+    for node in self:
+      str += f' {node.value}'
+      if count == 3:
+        break
+      else:
+        str += '->'
+    return str
 
-  def isEmpty(self):
-    return self._head is None
 
-  @property
-  def size(self):
-    return self._size
+ 
   
     

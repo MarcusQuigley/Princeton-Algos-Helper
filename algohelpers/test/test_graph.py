@@ -14,7 +14,7 @@ class TestGraph(unittest.TestCase):
     self.assertIsNotNone(graph)
 
   def test_create_graph_with_graph(self):
-    graph = Graph(None,5)
+    graph = self._create_graph()# Graph(None,5)
     newgraph = Graph(graph)
     self.assertIsNotNone(graph)
 
@@ -33,8 +33,6 @@ class TestGraph(unittest.TestCase):
 
   def test_create_graph_with_badstream(self):
     try:
-      # TESTDATA_FILENAME = os.path.join(os.path.dirname(__file__), 'tiny_graph_data.txt')
-      # data = open(TESTDATA_FILENAME, 'r')
       data = io.StringIO('some random data')
 
       graph = Graph(None,0, data)
@@ -47,7 +45,7 @@ class TestGraph(unittest.TestCase):
 
 
   def test_create_graph_with_negative(self):
-    self.assertRaises(ValueError, None,-5)  
+    self.assertRaises(ValueError, Graph, None,-5)  
 
   def test_get_vertex(self):
     expected = 3
@@ -65,6 +63,22 @@ class TestGraph(unittest.TestCase):
     graph = Graph(None, 3)
     self.assertRaises(ValueError, graph.add_edge,1,5)   
 
+  def test_has_edge(self):
+    g = self._create_graph()
+    self.assertTrue(g.has_edge(1,2))
+
+  def test_does_not_have_edge(self):
+    g = self._create_graph()
+    self.assertFalse(g.has_edge(3,0))
+    
+  def test_self_loop_not_allowed(self):
+    g = self._create_graph()
+    self.assertRaises(ValueError, g.add_edge,2,2)   
+
+  def test_parallel_loop_not_allowed(self):
+    g = self._create_graph()
+    self.assertRaises(ValueError, g.add_edge,3,1)   
+
   def test_degree(self):
     graph = self._create_graph()
     expected = 3
@@ -77,7 +91,7 @@ class TestGraph(unittest.TestCase):
     expected = Bag()
     expected.addend(3)
     expected.addend(2)
-    expected.addend(2)
+    expected.addend(0)
 
     list_expected = []
     list_actual = []
@@ -93,18 +107,20 @@ class TestGraph(unittest.TestCase):
     expected = self._create_graph()
     xx = expected.__str__()
     self.assertTrue(len(expected.__str__()) > 0)
+  def test_clone_is_unique(self):
+    graph = self._create_graph()
+    clone = graph.clone()
+    clone.add_edge(0,1)
+    self.assertNotEqual(graph.edges, clone.edges)
+    #self.assertNotEqual(graph.degree(1), clone.degree(1))
 
 
   def _create_graph(self):
     graph = Graph(None, 4)
     graph.add_edge(1,3)
     graph.add_edge(1,2)
-    graph.add_edge(2,1)
+    graph.add_edge(1,0)
     return graph
-
-  
-
-
   
   if __name__ == '__main__':
     unittest.main()

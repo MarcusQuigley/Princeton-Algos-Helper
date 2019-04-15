@@ -10,13 +10,13 @@ class TestBag(unittest.TestCase):
 
   def test_bag(self):
     bag = Bag()
-    self.assertTrue(bag.isEmpty())
+    self.assertTrue(bag.isEmpty)
 
   def test_add_works(self):
     bag = Bag()
     bag.addend('12')
     self.assertTrue(bag.size == 1)
-    #self.assertFalse(bag.isEmpty())
+    #self.assertFalse(bag.isEmpty
 
   def test_add__multiple_from_front_works(self):
     bag = Bag()
@@ -34,7 +34,7 @@ class TestBag(unittest.TestCase):
     bag = Bag()
     for i in range(3):
       bag.addfirst(i)
-    self.assertFalse(bag.isEmpty())
+    self.assertFalse(bag.isEmpty)
 
   def test_add__multiple_contains_2(self):
     bag = Bag()

@@ -31,7 +31,7 @@ class Graph(object):
       for w in graph.__adjacent[v]:
         stack.append(w)
       for ww in stack:
-        self.__adjacent.addfirst(w)
+        self.__adjacent[v].addfirst(ww)
 
   def __init_stream(self, input):
     if (input is None):
@@ -59,8 +59,7 @@ class Graph(object):
       print(f'valueerror: {error}')
     except BaseException as error:
       print(f'Unexpected error: {error}')
-    
-
+  
   def __populate_adjacents(self, vertices):
     for i in range(vertices):
       self.__adjacent[i] = Bag()
@@ -73,16 +72,24 @@ class Graph(object):
   def vertices(self):
     return self.__vertices
 
+  def has_edge(self,v,w):
+    return self.__adjacent[v] is not None and self.__adjacent[v].contains(w)
+
   def __validate_vertex(self,vertex):
     if vertex < 0 or vertex >= self.__vertices:
       raise ValueError(vertex, ' was outside the range')
 
-  def add_edge(self, vertex, w):
-    self.__validate_vertex(vertex)
+  def add_edge(self, v, w):
+    self.__validate_vertex(v)
     self.__validate_vertex(w)
+    if v == w:
+      raise ValueError('No self loops')
+    if self.__adjacent[v].contains(w) or self.__adjacent[w].contains(v): 
+      raise ValueError(f'{w}, {v} contain a perallel loop')
+      
     self.__edges+=1
-    self.__adjacent[vertex].addfirst(w)
-    self.__adjacent[w].addfirst(vertex)
+    self.__adjacent[v].addfirst(w)
+    self.__adjacent[w].addfirst(v)
 
   def degree(self, vertex):
     self.__validate_vertex(vertex)
@@ -91,6 +98,10 @@ class Graph(object):
   def adjacent_vertices(self, vertex):
     self.__validate_vertex(vertex)
     return self.__adjacent[vertex]
+
+  def clone(self):
+    clone = Graph(self)
+    return clone
 
   def __str__(self):
     #str = ''
