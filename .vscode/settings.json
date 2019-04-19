@@ -1,3 +1,13 @@
 {
-  "python.pythonPath": "C:\\Python\\Python_36\\python.exe"
+  "python.pythonPath": "C:\\Python\\Python_36\\python.exe",
+  "python.unitTest.unittestArgs": [
+    "-v",
+    "-s",
+    "./algohelpers",
+    "-p",
+    "test_*.py"
+  ],
+  "python.unitTest.pyTestEnabled": false,
+  "python.unitTest.nosetestsEnabled": false,
+  "python.unitTest.unittestEnabled": true
 }

@@ -15,7 +15,7 @@ class TestGraph(unittest.TestCase):
 
   def test_create_graph_with_graph(self):
     graph = self._create_graph()# Graph(None,5)
-    newgraph = Graph(graph)
+    
     self.assertIsNotNone(graph)
 
   def test_create_graph_with_stream(self):
@@ -105,7 +105,6 @@ class TestGraph(unittest.TestCase):
 
   def test_string_returned(self):
     expected = self._create_graph()
-    xx = expected.__str__()
     self.assertTrue(len(expected.__str__()) > 0)
   def test_clone_is_unique(self):
     graph = self._create_graph()
